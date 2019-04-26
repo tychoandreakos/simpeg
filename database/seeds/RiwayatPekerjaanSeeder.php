@@ -15,7 +15,7 @@ class RiwayatPekerjaanSeeder extends Seeder
         $faker = Faker::create('id_ID');
 
         DB::table('riwayat_pekerjaan')->insert([
-            'nip_pegawai' => '4128065502041410',
+            'nip_pegawai' => '2044935907895055',
             'nama_perusahaan' => $faker->company,
             'lokasi_perusahaan' => $faker->address,
             'jabatan_perusahaan' => $faker->jobTitle,

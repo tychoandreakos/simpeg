@@ -13,7 +13,7 @@ class IbuSeeder extends Seeder
     {
         $faker = Faker::create('id_ID');
         DB::table('ibu')->insert([
-            'nip_pegawai' => '4128065502041410',
+            'nip_pegawai' => '2044935907895055',
             'nama_ibu' => $faker->name,
             'tgl_lahir_ibu' => $faker->date($format = 'Y-m-d', $max = 'now'),
             'tmp_lahir_ibu' => $faker->city,

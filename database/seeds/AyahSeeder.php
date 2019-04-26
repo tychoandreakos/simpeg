@@ -14,7 +14,7 @@ class AyahSeeder extends Seeder
     {
         $faker = Faker::create('id_ID');
         DB::table('ayah')->insert([
-            'nip_pegawai' => '4128065502041410',
+            'nip_pegawai' => '2044935907895055',
             'nama_ayah' => $faker->name,
             'tgl_lahir_ayah' => $faker->date($format = 'Y-m-d', $max = 'now'),
             'tmp_lahir_ayah' => $faker->city,

@@ -38,7 +38,7 @@ class PegawaiController extends Controller
      */
     public function store(Request $request)
     {
-       $this->validation($request);
+    //    $this->validation($request);
 
         $faker = Faker::create('id_ID');
 
@@ -46,14 +46,14 @@ class PegawaiController extends Controller
             'nip_pegawai' => $faker->nik,
             'nama' => $request->nama,
             'alamat' => $request->alamat,
-            'tgl_lahir' => $faker->date($format = 'Y-m-d', $max = 'now'),
-            'tmp_lahir' => $faker->city,
-            'jk' => $faker->randomElement(['0','1']),
+            'tgl_lahir' => $request->tgl,
+            'tmp_lahir' => $request->tmp,
+            'jk' => $request->jk,
             'no_telp' => $request->no_telp,
-            'status' => $faker->randomElement(['0','1']),
-            'email' => $faker->email,
-            'gol_darah' => $faker->randomElement(['0','1','2','3']),
-            'agama' => $faker->randomElement(['0','1','2','3']),
+            'status' => $request->status,
+            'email' => $request->email,
+            'gol_darah' => $request->goldar,
+            'agama' => $request->agama,
             'created_at' => \Carbon\Carbon::now(),
             'updated_at' => \Carbon\Carbon::now()
         ]);
@@ -198,7 +198,7 @@ class PegawaiController extends Controller
                 'id_pekerjaan' => $pegawai->id_pekerjaan,
                 'nama_perusahaan' => $pegawai->nama_perusahaan,
                 'lokasi_perusahaan' => $pegawai->lokasi_perusahaan,
-                'jabatan_perushaan' => $pegawai->jabatan_perusahaan,
+                'jabatan_perusahaan' => $pegawai->jabatan_perusahaan,
                 'periode_perusahaan' => $pegawai->periode_perusahaan,
     
                 // ayah
@@ -304,4 +304,5 @@ class PegawaiController extends Controller
             echo 'Tidak ditemukan data';
         }
     }
+
 }

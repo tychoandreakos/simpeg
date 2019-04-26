@@ -46,4 +46,19 @@ class AnakController extends Controller
 
         return redirect('pegawai')->with('pesan', 'Data anak Berhasil Diubah');
     }
+
+    public function bikin(Request $req)
+    {
+        DB::table('anak')->insert([
+            'nip_pegawai' => $req->nip,
+            'nama_anak' => $req->nama,
+            'tgl_lahir_anak' => '2004-04-12',
+            'tmp_lahir_anak' => 'Bandung',
+            'pendidikan_anak' => 'SDN Bina Harapan',
+            'jk_anak' => '1',
+            'status_anak' => '2',
+            'created_at' => \Carbon\Carbon::now(),
+            'updated_at' => \Carbon\Carbon::now()
+        ]);
+    }
 }

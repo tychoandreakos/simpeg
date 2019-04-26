@@ -15,7 +15,7 @@ class AnakSeeder extends Seeder
         $faker = Faker::create('id_ID');
 
         DB::table('anak')->insert([
-            'nip_pegawai' => '4128065502041410',
+            'nip_pegawai' => '2044935907895055',
             'nama_anak' => $faker->name,
             'tgl_lahir_anak' => $faker->date,
             'tmp_lahir_anak' => $faker->city,

@@ -16,13 +16,14 @@ Route::get('/', function () {
 });
 
 // pegawai
-Route::get('pegawai', 'PegawaiController@index');
-Route::get('pegawai/tambah', 'PegawaiController@create');
+Route::get('pegawai', 'PegawaiController@index')->name('home');
+Route::get('pegawai/tambah', 'PegawaiController@create')->name('tambah_pegawai');
 Route::post('pegawai/store', 'PegawaiController@store');
-Route::get('pegawai/edit/{nip}', 'PegawaiController@edit');
-Route::get('pegawai/hapus/{nip}', 'PegawaiController@destroy');
+Route::get('pegawai/edit/{nip}', 'PegawaiController@edit')->name('edit_pegawai');
+Route::get('pegawai/hapus/{nip}', 'PegawaiController@destroy')->name('hapus_pegawai');
 Route::post('pegawai/update', 'PegawaiController@update');
 Route::get('pegawai/detail/{nip}', 'PegawaiController@detail');
+// Route::resource('pegawai', 'PegawaiController');~
 
 //pasangan
 Route::get('pegawai/detail/{nip}/pasangan', 'PasanganController@index');
@@ -50,4 +51,6 @@ Route::post('pegawai/detail/{nip}/ibu/create', 'IbuController@create');
 Route::post('pegawai/detail/{nip}/ibu/update', 'IbuController@update');
 
 
-Route::view('test', 'pegawai.index');
+// Route::get('test', 'PegawaiController@index');
+// Route::post('test/create', 'AnakController@bikin');
+// // Route::get('test/home', 'PegawaiController@index');

@@ -14,7 +14,7 @@ class PasanganSeeder extends Seeder
     {
         $faker = Faker::create('id_ID');
         DB::table('pasangan')->insert([
-           'nip_pegawai' => '4128065502041410',
+           'nip_pegawai' => '2044935907895055',
             'nama_pasangan' => $faker->name,
             'tgl_lahir_pasangan' => $faker->date,
             'tmp_lahir_pasangan' => $faker->city,
