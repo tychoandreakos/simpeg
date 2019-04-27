@@ -91,10 +91,10 @@
                                 <div class="col col-md-6">
                                     <label for="goldar">Golongan Darah</label>
                                     <select id="goldar" name="goldar" required>
-                                        <option value="0">A</option>
-                                        <option value="1">B</option>
-                                        <option value="2">AB</option>
-                                        <option value="3">O</option>
+                                        <option value="0">O</option>
+                                        <option value="1">A</option>
+                                        <option value="2">B</option>
+                                        <option value="3">AB</option>
                                     </select>
                                 </div>
 

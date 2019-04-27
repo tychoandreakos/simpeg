@@ -29,52 +29,80 @@
                             </tr>
                             <tr>
                                 <td>Nama</td>
-                                <td>{{ $pegawai['nama'] }}</td>
+                                <td>{{ ucfirst($pegawai['nama']) }}</td>
                             </tr>
                             <tr>
                                 <td>Alamat</td>
-                                <td>{{ $pegawai['alamat'] }}</td>
+                                <td>{{ ucfirst($pegawai['alamat']) }}</td>
                             </tr>
 
                             <tr>
                             <tr>
                                 <td>Tempat, Tanggal Lahir </td>
-                                <td>{{ $pegawai['lahir'] }}</td>
+                                <td>{{ ucfirst($pegawai['lahir']) }}</td>
                             </tr>
                             <tr>
                                 <td>Jenis Kelamin</td>
-                                <td>{{ $pegawai['jk'] }}</td>
+                                <td>{{ ucfirst($pegawai['jk']) }}</td>
                             </tr>
                             <tr>
                                 <td>Nomer Telepon</td>
-                                <td>{{ $pegawai['no_telp'] }}</td>
+                                <td>{{ ucfirst($pegawai['no_telp']) }}</td>
                             </tr>
                             <tr>
                                 <td>Status </td>
-                                <td>{{ $pegawai['status'] }}</td>
+                                <td>{{ ucfirst($pegawai['status']) }}</td>
                             </tr>
                             <tr>
                                 <td>Email </td>
-                                <td>{{ $pegawai['email'] }}</td>
+                                <td>{{ ucfirst($pegawai['email']) }}</td>
                             </tr>
                             <tr>
                                 <td>Golongan Darah </td>
-                                <td>{{ $pegawai['gol_darah'] }}</td>
+                                <td>{{ ucfirst($pegawai['gol_darah']) }}</td>
                             </tr>
                             <tr>
                                 <td>Agama </td>
-                                <td>{{ $pegawai['agama'] }}</td>
+                                <td>{{ ucfirst($pegawai['agama']) }}</td>
                             </tr>
 
                         </tbody>
                     </table>
+                    
+                    @if (is_null($pegawai['id_pasangan']) && is_null($pegawai['id_anak']) && is_null($pegawai['id_ayah']) && is_null($pegawai['id_ibu']) && is_null($pegawai['id_pekerjaan']))
+                    <p class="text-danger">Data yang belum lengkap: </p>
+                    @endif
 
-                    <a href="#" class="btn btn-primary">My Sales Performance</a>
-                    <a href="#" class="btn btn-primary">Team Sales Performance</a>
+                    @if (!is_null($pegawai['id_pasangan']) && !is_null($pegawai['id_anak']) && !is_null($pegawai['id_ayah']) && !is_null($pegawai['id_ibu']) && !is_null($pegawai['id_pekerjaan']))
+                    <p class="text-success"><i class="fa fa-check"></i> Data sudah lengkap. </p>
+                    @endif
+
+
+                    {{-- button lengkapi data --}}
+                    @if (is_null($pegawai['id_pasangan']))
+                    <a href="{{ $url = route('pasangan.add', ['nip' => $pegawai['nip']]) }}" class="btn btn-primary btn-sm">Lengkapi Data Pasangan</a>
+                    @endif 
+
+                    @if (is_null($pegawai['id_anak']))
+                    <a href="{{ $url = route('anak.add', ['nip' => $pegawai['nip']]) }}" class="btn btn-primary btn-sm">Lengkapi Data Anak</a>
+                    @endif 
+
+                    @if (is_null($pegawai['id_ayah']))
+                    <a href="{{ $url = route('ayah.add', ['nip' => $pegawai['nip']]) }}" class="btn btn-primary btn-sm">Lengkapi Data Ayah</a>
+                    @endif 
+
+                    @if (is_null($pegawai['id_ibu']))
+                    <a href="{{ $url = route('ibu.add', ['nip' => $pegawai['nip']]) }}" class="btn btn-primary btn-sm">Lengkapi Data Ibu</a>
+                    @endif 
+
+                    @if (is_null($pegawai['id_pekerjaan']))
+                    <a href="{{ $url = route('pekerjaan.add', ['nip' => $pegawai['nip']]) }}" class="btn btn-primary btn-sm">Lengkapi Data Pekerjaan</a>
+                    @endif 
+
                 </div>
             </div>
         </div>
-        <div class="panel-footer text-white">
+        <div class="panel-footer text-white mt-3">
             <span class="pull-right">
             <a href="{{ $url = route('edit_pegawai', ['nip' => $pegawai['nip']]) }}" data-original-title="Edit this user" data-toggle="tooltip" type="button"
                     class="btn btn-sm btn-success"><i class="fa fa-refresh"></i> Edit</a>
@@ -106,15 +134,15 @@
                         <tbody>
                             <tr>
                                 <td>Nama </td>
-                                <td>{{ $pegawai['nama_pasangan'] }}</td>
+                                <td>{{ ucfirst($pegawai['nama_pasangan']) }}</td>
                             </tr>
                             <tr>
                                 <td>Tempat, Tanggal Lahir </td>
-                                <td>{{ $pegawai['lahir_pasangan'] }}</td>
+                                <td>{{ ucfirst($pegawai['lahir_pasangan']) }}</td>
                             </tr>
                             <tr>
                                 <td>Pendidikan </td>
-                                <td>{{ $pegawai['pendidikan_pasangan'] }}</td>
+                                <td>{{ ucfirst($pegawai['pendidikan_pasangan']) }}</td>
                             </tr>
 
 
@@ -126,7 +154,7 @@
         </div>
         <div class="panel-footer text-white">
             <span class="pull-right">
-                <a href="edit.html" data-original-title="Edit this user" data-toggle="tooltip" type="button"
+                <a href="{{ $url = route('pasangan.edit', ['id' => $pegawai['nip']]) }}" data-original-title="Edit this user" data-toggle="tooltip" type="button"
                     class="btn btn-primary"><i class="fa fa-refresh"></i> Edit</a>
             </span>
         </div>
@@ -157,23 +185,23 @@
                         <tbody>
                             <tr>
                                 <td>Nama </td>
-                                <td>{{ $pegawai['nama_anak'] }}</td>
+                                <td>{{ ucfirst($pegawai['nama_anak']) }}</td>
                             </tr>
                             <tr>
                                 <td>Tempat, Tanggal Lahir </td>
-                                <td>{{ $pegawai['lahir_anak'] }}</td>
+                                <td>{{ ucfirst($pegawai['lahir_anak']) }}</td>
                             </tr>
                             <tr>
                                 <td>Pendidikan </td>
-                                <td>{{ $pegawai['pendidikan_anak'] }}</td>
+                                <td>{{ ucfirst($pegawai['pendidikan_anak']) }}</td>
                             </tr>
                             <tr>
                                 <td>Jenis Kelamin </td>
-                                <td>{{ $pegawai['jk_anak'] }}</td>
+                                <td>{{ ucfirst($pegawai['jk_anak']) }}</td>
                             </tr>
                             <tr>
                                 <td>Status </td>
-                                <td>{{ $pegawai['status_anak'] }}</td>
+                                <td>{{ ucfirst($pegawai['status_anak']) }}</td>
                             </tr>
 
 
@@ -185,7 +213,7 @@
         </div>
         <div class="panel-footer text-white">
             <span class="pull-right">
-                <a href="edit.html" data-original-title="Edit this user" data-toggle="tooltip" type="button"
+            <a href="{{ $url = route('anak.edit', ['nip' => $pegawai['nip']]) }}" data-original-title="Edit this user" data-toggle="tooltip" type="button"
                     class="btn btn-primary"><i class="fa fa-refresh"></i> Edit</a>
             </span>
         </div>
@@ -215,15 +243,15 @@
                         <tbody>
                             <tr>
                                 <td>Nama Ayah </td>
-                                <td>{{ $pegawai['nama_ayah'] }}</td>
+                                <td>{{ ucfirst($pegawai['nama_ayah']) }}</td>
                             </tr>
                             <tr>
                                 <td>Tempat, Tanggal Lahir </td>
-                                <td>{{ $pegawai['lahir_ayah'] }}</td>
+                                <td>{{ ucfirst($pegawai['lahir_ayah']) }}</td>
                             </tr>
                             <tr>
                                 <td>Pendidikan </td>
-                                <td>{{ $pegawai['pendidikan_ayah'] }}</td>
+                                <td>{{ ucfirst($pegawai['pendidikan_ayah']) }}</td>
                             </tr>
 
                         </tbody>
@@ -234,7 +262,7 @@
         </div>
         <div class="panel-footer text-white">
             <span class="pull-right">
-                <a href="edit.html" data-original-title="Edit this user" data-toggle="tooltip" type="button"
+                <a href="{{ $url = route('ayah.edit', ['nip' => $pegawai['nip']]) }}" data-original-title="Edit this user" data-toggle="tooltip" type="button"
                     class="btn btn-primary"><i class="fa fa-refresh"></i> Edit</a>
             </span>
         </div>
@@ -263,15 +291,15 @@
                         <tbody>
                             <tr>
                                 <td>Nama ibu </td>
-                                <td>{{ $pegawai['nama_ibu'] }}</td>
+                                <td>{{ ucfirst($pegawai['nama_ibu']) }}</td>
                             </tr>
                             <tr>
                                 <td>Tempat, Tanggal Lahir </td>
-                                <td>{{ $pegawai['lahir_ibu'] }}</td>
+                                <td>{{ ucfirst($pegawai['lahir_ibu']) }}</td>
                             </tr>
                             <tr>
                                 <td>Pendidikan </td>
-                                <td>{{ $pegawai['pendidikan_ibu'] }}</td>
+                                <td>{{ ucfirst($pegawai['pendidikan_ibu']) }}</td>
                             </tr>
 
                         </tbody>
@@ -282,7 +310,7 @@
         </div>
         <div class="panel-footer text-white">
             <span class="pull-right">
-                <a href="edit.html" data-original-title="Edit this user" data-toggle="tooltip" type="button"
+                <a href="{{ $url = route('ibu.edit', ['nip' => $pegawai['nip']]) }}" data-original-title="Edit this user" data-toggle="tooltip" type="button"
                     class="btn btn-primary"><i class="fa fa-refresh"></i> Edit</a>
             </span>
         </div>
@@ -312,19 +340,19 @@
                         <tbody>
                             <tr>
                                 <td>Nama Perusahaan </td>
-                                <td>{{ $pegawai['nama_perusahaan'] }}</td>
+                                <td>{{ ucfirst($pegawai['nama_perusahaan']) }}</td>
                             </tr>
                             <tr>
                                 <td>Lokasi Perusahaan </td>
-                                <td>{{ $pegawai['lokasi_perusahaan'] }}</td>
+                                <td>{{ ucfirst($pegawai['lokasi_perusahaan']) }}</td>
                             </tr>
                             <tr>
                                 <td>Jabatan Perusahaan </td>
-                                <td>{{ $pegawai['jabatan_perusahaan'] }}</td>
+                                <td>{{ ucfirst($pegawai['jabatan_perusahaan']) }}</td>
                             </tr>
                             <tr>
-                                <td>JPeriode Perusahaan </td>
-                                <td>{{ $pegawai['periode_perusahaan'] }}</td>
+                                <td>Periode Perusahaan </td>
+                                <td>{{ ucfirst($pegawai['periode_perusahaan']) }}</td>
                             </tr>
 
                         </tbody>
@@ -335,7 +363,7 @@
         </div>
         <div class="panel-footer text-white">
             <span class="pull-right">
-                <a href="edit.html" data-original-title="Edit this user" data-toggle="tooltip" type="button"
+                <a href="{{ $url = route('pekerjaan.edit', ['nip' => $pegawai['nip']]) }}" data-original-title="Edit this user" data-toggle="tooltip" type="button"
                     class="btn btn-primary"><i class="fa fa-refresh"></i> Edit</a>
             </span>
         </div>

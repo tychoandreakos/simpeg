@@ -1,64 +1,164 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Alert;
 
 class AnakController extends Controller
 {
-    public function index(Request $req, $nip)
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
     {
-        $checking = DB::table('anak')->where('nip_pegawai', $nip)->exists();
-        if($checking){
-            $anak = DB::table('anak')->where('nip_pegawai', $nip)->get();
-            return view('anak.update', ['anak' => $anak]);
-        } else {
-            return view('anak.create', ['nip' => $nip]);
+        //
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create($id)
+    {
+        return view('anak.create', ['id' => $id]);    
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $now = \Carbon\Carbon::now();
+        $anak = DB::table('anak');
+        $pegawai = DB::table('pegawai');
+
+        $validatedData = $request->validate([
+            'nama' => 'required|max:50',
+            'tgl' => 'required',
+            'tmp' => 'required',
+            'pendidikan' => 'required',
+            'jk' => 'required',
+            'status' => 'required',
+        ]);
+
+        $checking = $pegawai->where('nip_pegawai', $request->nip)->exists();
+        if(!$checking){
+            Alert::error('NIP tidak ditemukan', 'Error');
+            return redirect('pegawai');
         }
-    }
 
-    public function create(Request $request ,$nip)
-    {
-      
-        DB::table('anak')->insert([
-            'nip_pegawai' => $nip,
+       $saved = $anak->insert([
+            'nip_pegawai' => $request->nip,
             'nama_anak' => $request->nama,
-            'tgl_lahir_anak' => $request->tgl_lahir,
-            'tmp_lahir_anak' => $request->tmp_lahir,
+            'tgl_lahir_anak' => $request->tgl,
+            'tmp_lahir_anak' => $request->tmp,
             'pendidikan_anak' => $request->pendidikan,
-            'created_at' => \Carbon\Carbon::now(),
-            'updated_at' => \Carbon\Carbon::now(),
+            'jk_anak' => $request->jk,
+            'status_anak' => $request->status,
+            'created_at' => $now,
+            'updated_at' => $now
         ]);
 
-        return redirect('pegawai')->with('pesan', 'Data anak Berhasil Dibuat');
+        if(!$saved){
+            Alert::error('Data anak gagal disimpan', 'Error');
+            return view('anak.create');
+        }
+        Alert::success('Data anak berhasil disimpan', 'Sukses');
+        return redirect('pegawai/detail/'. $id);
     }
 
-    public function update(Request $request)
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
     {
-        DB::table('anak')->where('id_anak', $request->id)->update([
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $anak = DB::table('anak');
+        $checking = $anak->where('nip_pegawai', $id)->exists();
+
+        if(!$checking){
+            Alert::error('NIP tidak ditemukan', 'Error');
+            return redirect('pegawai');
+        }
+
+        $data = $anak->where('nip_pegawai', $id)->get();
+        return view('anak.edit', ['data' => $data]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $now = \Carbon\Carbon::now();
+        $anak = DB::table('anak');
+
+        $validatedData = $request->validate([
+            'nama' => 'required|max:50',
+            'tgl' => 'required',
+            'tmp' => 'required',
+            'pendidikan' => 'required',
+            'jk' => 'required',
+            'status' => 'required',
+        ]);
+
+        $checking = $anak->where('nip_pegawai', $id)->exists();
+        if(!$checking){
+            Alert::error('NIP tidak ditemukan', 'Error');
+            return redirect('pegawai');
+        }
+
+       $update = $anak->where('id_anak', $request->id_anak)->update([
             'nama_anak' => $request->nama,
-            'tgl_lahir_anak' => $request->tgl_lahir,
-            'tmp_lahir_anak' => $request->tmp_lahir,
+            'tgl_lahir_anak' => $request->tgl,
+            'tmp_lahir_anak' => $request->tmp,
             'pendidikan_anak' => $request->pendidikan,
-            'updated_at' => \Carbon\Carbon::now()
+            'jk_anak' => $request->jk,
+            'status_anak' => $request->status,
+            'updated_at' => $now
         ]);
 
-        return redirect('pegawai')->with('pesan', 'Data anak Berhasil Diubah');
+        if(!$update){
+            Alert::error('Data anak gagal diubah', 'Error');
+            return view('anak.create');
+        }
+        Alert::success('Data anak dengan berhasil diubah', 'Sukses');
+        return redirect('pegawai/detail/'. $id);
     }
 
-    public function bikin(Request $req)
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
     {
-        DB::table('anak')->insert([
-            'nip_pegawai' => $req->nip,
-            'nama_anak' => $req->nama,
-            'tgl_lahir_anak' => '2004-04-12',
-            'tmp_lahir_anak' => 'Bandung',
-            'pendidikan_anak' => 'SDN Bina Harapan',
-            'jk_anak' => '1',
-            'status_anak' => '2',
-            'created_at' => \Carbon\Carbon::now(),
-            'updated_at' => \Carbon\Carbon::now()
-        ]);
+        //
     }
 }

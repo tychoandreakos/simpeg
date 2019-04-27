@@ -26,29 +26,34 @@ Route::get('pegawai/detail/{nip}', 'PegawaiController@detail');
 // Route::resource('pegawai', 'PegawaiController');~
 
 //pasangan
-Route::get('pegawai/detail/{nip}/pasangan', 'PasanganController@index');
-Route::post('pegawai/detail/{nip}/pasangan/create', 'PasanganController@create');
-Route::post('pegawai/detail/{nip}/pasangan/update', 'PasanganController@update');
+Route::resource('pegawai/detail/pasangan', 'PasanganController')->parameters([
+    'pegawai/detail/pasangan' => 'nip',
+]);
+Route::get('pegawai/detail/pasangan/{pasangan}', 'PasanganController@create')->name('pasangan.add');
 
 // anak
-Route::get('pegawai/detail/{nip}/anak', 'AnakController@index');
-Route::post('pegawai/detail/{nip}/anak/create', 'AnakController@create');
-Route::post('pegawai/detail/{nip}/anak/update', 'AnakController@update');
+Route::resource('pegawai/detail/anak', 'AnakController')->parameters([
+    'pegawai/detail/anak' => 'nip',
+]);
+Route::get('pegawai/detail/anak/{anak}', 'AnakController@create')->name('anak.add');
 
 // riwayat pekerjaan
-Route::get('pegawai/detail/{nip}/pekerjaan', 'PekerjaanController@index');
-Route::post('pegawai/detail/{nip}/pekerjaan/create', 'PekerjaanController@create');
-Route::post('pegawai/detail/{nip}/pekerjaan/update', 'PekerjaanController@update');
+Route::resource('pegawai/detail/pekerjaan', 'PekerjaanController')->parameters([
+    'pegawai/detail/pekerjaan' => 'nip'
+]);
+Route::get('pegawai/detail/pekerjaan/{pekerjaan}', 'PekerjaanController@create')->name('pekerjaan.add');
 
 // ayah
-Route::get('pegawai/detail/{nip}/ayah', 'AyahController@index');
-Route::post('pegawai/detail/{nip}/ayah/create', 'AyahController@create');
-Route::post('pegawai/detail/{nip}/ayah/update', 'AyahController@update');
+Route::resource('pegawai/detail/ayah', 'AyahController')->parameters([
+    'pegawai/detail/ayah' => 'nip'
+]);
+Route::get('pegawai/detail/ayah/{ayah}', 'AyahController@create')->name('ayah.add');
 
 //ibu
-Route::get('pegawai/detail/{nip}/ibu', 'IbuController@index');
-Route::post('pegawai/detail/{nip}/ibu/create', 'IbuController@create');
-Route::post('pegawai/detail/{nip}/ibu/update', 'IbuController@update');
+Route::resource('pegawai/detail/ibu', 'IbuController')->parameters([
+    'pegawai/detail/ibu' => 'nip'
+]);
+Route::get('pegawai/detail/ibu/{ibu}', 'IbuController@create')->name('ibu.add');
 
 
 // Route::get('test', 'PegawaiController@index');

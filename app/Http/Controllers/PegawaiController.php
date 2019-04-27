@@ -16,7 +16,7 @@ class PegawaiController extends Controller
      */
     public function index()
     {
-        $pegawai = DB::table('pegawai')->get();
+        $pegawai = DB::table('pegawai')->orderByRaw('created_at','DESC')->get();
         return view('pegawai.index', ['pegawai' => $pegawai]);
     }
 

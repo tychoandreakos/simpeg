@@ -8,9 +8,10 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="{{ asset('css/sweetalert.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap4.min.css ') }}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <title>Hello, world!</title>
+    <title>Selamat Datang</title>
   </head>
   <body>
 
@@ -60,9 +61,11 @@
     <script src="{{asset('js/jquery-3.3.1.slim.min.js')}}"></script>
     <script src="{{asset('js/popper.min.js')}}"></script>
     <script src="{{asset('js/bootstrap.min.js')}}"></script>
-    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+    <script src="{{asset('js/jquery.dataTables.min.js')}}"></script>
+    <script src="{{asset('js/dataTables.bootstrap4.min.js')}}"></script>
+    <script src="h{{asset('js/sweetalert.min.js')}}"></script>
     <script src="{{asset('js/js.js')}}"></script>
     <script src="{{asset('js/clock.js')}}"></script>
+    @include('sweet::alert')
   </body>
 </html>
