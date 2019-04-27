@@ -144,6 +144,10 @@
                                 <td>Pendidikan </td>
                                 <td>{{ ucfirst($pegawai['pendidikan_pasangan']) }}</td>
                             </tr>
+                            <tr>
+                                <td>Status </td>
+                                <td>{{ ucfirst($pegawai['status_pasangan']) }}</td>
+                            </tr>
 
 
                         </tbody>

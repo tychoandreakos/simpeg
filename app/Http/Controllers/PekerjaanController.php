@@ -4,46 +4,153 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Alert;
 
 class PekerjaanController extends Controller
 {
-    public function index(Request $req, $nip)
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
     {
-        $checking = DB::table('riwayat_pekerjaan')->where('nip_pegawai', $nip)->exists();
-        if($checking){
-            $riwayat_pekerjaan = DB::table('riwayat_pekerjaan')->where('nip_pegawai', $nip)->get();
-            return view('riwayat_pekerjaan.update', ['pekerjaan' => $riwayat_pekerjaan]);
-        } else {
-            return view('riwayat_pekerjaan.create', ['nip' => $nip]);
+        //
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create($id)
+    {
+        return view('pekerjaan.create', ['id' => $id]);   
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $now = \Carbon\Carbon::now();
+        $pekerjaan = DB::table('riwayat_pekerjaan');
+        $pegawai = DB::table('pegawai');
+
+        $validatedData = $request->validate([
+            'nama' => 'required|max:50',
+            'lokasi' => 'required',
+            'jabatan' => 'required',
+            'periode' => 'required',
+        ]);
+
+        $checking = $pegawai->where('nip_pegawai', $request->nip)->exists();
+        if(!$checking){
+            Alert::error('NIP tidak ditemukan', 'Error');
+            return redirect('pegawai');
         }
-    }
 
-    public function create(Request $request ,$nip)
-    {
-      
-        DB::table('riwayat_pekerjaan')->insert([
-            'nip_pegawai' => $nip,
+       $saved = $pekerjaan->insert([
+            'nip_pegawai' => $request->nip,
             'nama_perusahaan' => $request->nama,
             'lokasi_perusahaan' => $request->lokasi,
             'jabatan_perusahaan' => $request->jabatan,
             'periode_perusahaan' => $request->periode,
-            'created_at' => \Carbon\Carbon::now(),
-            'updated_at' => \Carbon\Carbon::now(),
+            'created_at' => $now,
+            'updated_at' => $now
         ]);
 
-        return redirect('pegawai')->with('pesan', 'Data Riwayat Pekerjaan Berhasil Dibuat');
+        if(!$saved){
+            Alert::error('Data pekerjaan gagal disimpan', 'Error');
+            return view('pekerjaan.create');
+        }
+        Alert::success('Data pekerjaan berhasil disimpan', 'Sukses');
+        return redirect('pegawai/detail/'. $request->nip);
     }
 
-    public function update(Request $request)
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
     {
-        DB::table('riwayat_pekerjaan')->where('id_pekerjaan', $request->id)->update([
-            'nama_perusahaan' => $request->nama,
-            'lokasi_perusahaan' => $request->lokasi,
-            'jabatan_perusahaan' => $request->jabatan,
-            'periode_perusahaan' => $request->periode,
-            'updated_at' => \Carbon\Carbon::now()
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $pekerjaan = DB::table('riwayat_pekerjaan');
+        $checking = $pekerjaan->where('nip_pegawai', $id)->exists();
+
+        if(!$checking){
+            Alert::error('NIP tidak ditemukan', 'Error');
+            return redirect('pegawai');
+        }
+
+        $data = $pekerjaan->where('nip_pegawai', $id)->get();
+        return view('pekerjaan.edit', ['data' => $data]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $now = \Carbon\Carbon::now();
+        $pekerjaan = DB::table('riwayat_pekerjaan');
+
+        $validatedData = $request->validate([
+            'nama' => 'required|max:50',
+            'lokasi' => 'required',
+            'jabatan' => 'required',
+            'periode' => 'required',
         ]);
 
-        return redirect('pegawai')->with('pesan', 'Data Riwayat_Pekerjaan Berhasil Diubah');
+        $checking = $pekerjaan->where('nip_pegawai', $id)->exists();
+        if(!$checking){
+            Alert::error('NIP tidak ditemukan', 'Error');
+            return redirect('pegawai');
+        }
+
+       $update = $pekerjaan->where('id_pekerjaan', $request->id_pekerjaan)->update([
+        'nama_perusahaan' => $request->nama,
+        'lokasi_perusahaan' => $request->lokasi,
+        'jabatan_perusahaan' => $request->jabatan,
+        'periode_perusahaan' => $request->periode,
+        'updated_at' => $now
+        ]);
+
+        if(!$update){
+            Alert::error('Data pekerjaan gagal diubah', 'Error');
+            return view('pekerjaan.create');
+        }
+        Alert::success('Data pekerjaan dengan berhasil diubah', 'Sukses');
+        return redirect('pegawai/detail/'. $id);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
     }
 }

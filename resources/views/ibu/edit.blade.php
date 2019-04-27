@@ -11,16 +11,19 @@
 
     <div class="panel panel-info bg-white p-5">
         <div class="panel-heading">
-            <h3 class="panel-title">Tambah Data Pasangan</h3>
+            <h3 class="panel-title">Edit Data Ibu</h3>
         </div>
         <div class="panel-body">
-        <form action="{{ $url = route('pasangan.store') }}" method="post" class="needs-validation" novalidate>
-                {{ csrf_field() }}
-        <input type="hidden" name="nip" value="{{ $id }}">
+            @foreach ($data as $ibu)
+
+            <form action="{{ $url = route('ibu.update', ['nip' => $ibu->nip_pegawai]) }}" method="post" class="needs-validation" novalidate>
+                    @method('patch')
+                    {{ csrf_field() }}
+        <input type="hidden" name="id_ibu" value="{{ $ibu->id_ibu }}">
                 <div class="form-group">
                     <label for="nama">Nama</label>
                     <input type="text" class="form-control @error('nama') is-invalid @enderror" id="nama" name="nama"
-                        placeholder="Masukan nama lengkap">
+                        placeholder="Masukan nama lengkap" value="{{ $ibu->nama_ibu }}">
                     @error('nama')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -31,7 +34,7 @@
                     <div class="row">
                         <div class="col col-md-6">
                             <label for="tmp">Tempat Lahir</label>
-                            <input type="text" class="form-control @error('tmp') is-invalid @enderror" id="tmp" name="tmp" placeholder="Contoh: Bandung">
+                            <input type="text" class="form-control @error('tmp') is-invalid @enderror" id="tmp" name="tmp" placeholder="Contoh: Bandung" value="{{ $ibu->tmp_lahir_ibu }}">
                             @error('tmp')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -41,7 +44,7 @@
                         <div class="col col-md-6">
                             <label for="tgl">Tanggal Lahir</label>
                             <input type="text" class="form-control @error('tgl') is-invalid @enderror" id="tgl" name="tgl"
-                                placeholder="Contoh: 1979-03-03">
+                                placeholder="Contoh: 1979-03-03" value="{{ $ibu->tgl_lahir_ibu }}">
                                 @error('tgl')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -53,28 +56,16 @@
                 <div class="form-group">
                     <label for="pendidikan">Pendidikan</label>
                     <input type="text" class="form-control @error('pendidikan') is-invalid @enderror" id="pendidikan" name="pendidikan"
-                        placeholder="Contoh: SMA 10 Bandung">
+                        placeholder="Contoh: SMA 10 Bandung" value="{{ $ibu->pend_ibu }}">
                         @error('pendidikan')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>
                             @enderror
                 </div>
-    
-        <div class="form-group">
-            <label for="status">Status</label>
-            <select class="form-control @error('status') is-invalid @enderror" name="status" id="status">
-                <option value="0">Suami</option>
-                <option value="1">Istri</option>
-            </select>
-            @error('status')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                            @enderror
-        </div>
-        <button type="submit" class="btn btn-success">Simpan Data Pasangan</button>
-        </form>
+        <button type="submit" class="btn btn-success">Update Data Ibu</button>
+		</form>
+		@endforeach
 
     </div>
 </div>

@@ -86,7 +86,7 @@
                             </div>
                             @enderror
         </div>
-        <button type="submit" class="btn btn-success">Simpan Anak</button>
+        <button type="submit" class="btn btn-success">Simpan Data Anak</button>
         </form>
 
     </div>

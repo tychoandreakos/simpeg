@@ -185,6 +185,7 @@ class PegawaiController extends Controller
                 'nama_pasangan' => $pegawai->nama_pasangan,
                 'lahir_pasangan' => $pegawai->tmp_lahir_pasangan .", ". $pegawai->tgl_lahir_pasangan,
                 'pendidikan_pasangan' => $pegawai->pendidikan_pasangan,
+                'status_pasangan' => $this->status_pasangan($pegawai->pendidikan_pasangan),
     
                 // anak
                 'id_anak' => $pegawai->id_anak,
@@ -302,6 +303,16 @@ class PegawaiController extends Controller
             return 'Anak ke 4';
         } else {
             echo 'Tidak ditemukan data';
+        }
+    }
+
+    public function status_pasangan($pasangan)
+    {
+        if($pasangan == 0)
+        {
+            return 'Istri';
+        } else {
+            return 'Suami';
         }
     }
 

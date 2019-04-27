@@ -72,7 +72,7 @@ class AnakController extends Controller
             return view('anak.create');
         }
         Alert::success('Data anak berhasil disimpan', 'Sukses');
-        return redirect('pegawai/detail/'. $id);
+        return redirect('pegawai/detail/'. $request->nip);
     }
 
     /**
