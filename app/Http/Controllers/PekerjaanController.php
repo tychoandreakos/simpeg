@@ -25,7 +25,7 @@ class PekerjaanController extends Controller
      */
     public function create($id)
     {
-        return view('pekerjaan.create', ['id' => $id]);   
+        return view('pekerjaan.create', ['id' => $id , 'title' => 'Tambah data riwayat pekerjaan']);   
     }
 
     /**
@@ -37,7 +37,7 @@ class PekerjaanController extends Controller
     public function store(Request $request)
     {
         $now = \Carbon\Carbon::now();
-        $pekerjaan = DB::table('riwayat_pekerjaan');
+        $pekerjaan = DB::table('pekerjaan');
         $pegawai = DB::table('pegawai');
 
         $validatedData = $request->validate([
@@ -53,8 +53,9 @@ class PekerjaanController extends Controller
             return redirect('pegawai');
         }
 
+
        $saved = $pekerjaan->insert([
-            'nip_pegawai' => $request->nip,
+            'pegawai_nip_pegawai' => $request->nip,
             'nama_perusahaan' => $request->nama,
             'lokasi_perusahaan' => $request->lokasi,
             'jabatan_perusahaan' => $request->jabatan,
@@ -79,7 +80,8 @@ class PekerjaanController extends Controller
      */
     public function show($id)
     {
-        //
+        $pekerjaan = DB::table('pekerjaan')->where('pegawai_nip_pegawai', $id)->get();
+        return view('pekerjaan.show', ['pekerjaan' => $pekerjaan, 'id' => $id, 'title' => 'Tampil data riwayat pekerjaan']);
     }
 
     /**
@@ -90,16 +92,16 @@ class PekerjaanController extends Controller
      */
     public function edit($id)
     {
-        $pekerjaan = DB::table('riwayat_pekerjaan');
-        $checking = $pekerjaan->where('nip_pegawai', $id)->exists();
+        $pekerjaan = DB::table('pekerjaan');
+        $checking = $pekerjaan->where('id_pekerjaan', $id)->exists();
 
         if(!$checking){
-            Alert::error('NIP tidak ditemukan', 'Error');
+            Alert::error('Data pekerjaan tidak ditemukan', 'Error');
             return redirect('pegawai');
         }
 
-        $data = $pekerjaan->where('nip_pegawai', $id)->get();
-        return view('pekerjaan.edit', ['data' => $data]);
+        $data = $pekerjaan->where('id_pekerjaan', $id)->get();
+        return view('pekerjaan.edit', ['data' => $data, 'title' => 'Edit data riwayat pekerjaan']);
     }
 
     /**
@@ -112,7 +114,8 @@ class PekerjaanController extends Controller
     public function update(Request $request, $id)
     {
         $now = \Carbon\Carbon::now();
-        $pekerjaan = DB::table('riwayat_pekerjaan');
+        $pekerjaan = DB::table('pekerjaan');
+
 
         $validatedData = $request->validate([
             'nama' => 'required|max:50',
@@ -121,13 +124,14 @@ class PekerjaanController extends Controller
             'periode' => 'required',
         ]);
 
-        $checking = $pekerjaan->where('nip_pegawai', $id)->exists();
+
+        $checking = $pekerjaan->where('id_pekerjaan', $id)->exists();
         if(!$checking){
-            Alert::error('NIP tidak ditemukan', 'Error');
-            return redirect('pegawai');
+            Alert::error('Data pekerjaan tidak ditemukan', 'Error');
+            return redirect('pegawai/detail/pekerjaan/'. $request->nip .'/show');
         }
 
-       $update = $pekerjaan->where('id_pekerjaan', $request->id_pekerjaan)->update([
+       $update = $pekerjaan->where('id_pekerjaan', $id)->update([
         'nama_perusahaan' => $request->nama,
         'lokasi_perusahaan' => $request->lokasi,
         'jabatan_perusahaan' => $request->jabatan,
@@ -136,11 +140,11 @@ class PekerjaanController extends Controller
         ]);
 
         if(!$update){
-            Alert::error('Data pekerjaan gagal diubah', 'Error');
-            return redirect('pegawai/'. $id .'/detail');
+            Alert::error('Data pekerjaan dengan nama '. $request->nama .' gagal diubah', 'Error');
+            return redirect('pegawai/detail/pekerjaan/'. $request->nip .'/show');
         }
-        Alert::success('Data pekerjaan dengan berhasil diubah', 'Sukses');
-        return redirect('pegawai/'. $id .'/detail');
+        Alert::success('Data pekerjaan dengan nama '. $request->nama .' berhasil diubah', 'Sukses');
+        return redirect('pegawai/detail/pekerjaan/'. $request->nip .'/show');
     }
 
     /**
@@ -149,8 +153,17 @@ class PekerjaanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($nip, $id)
     {
-        //
+        $pekerjaan = DB::table('pekerjaan');
+        $deleted = $pekerjaan->where('id_pekerjaan', $id)->delete();
+
+        if(!$deleted){
+            Alert::error('Data pekerjaan gagal dihapus', 'Error');
+            return redirect('pegawai/detail/pekerjaan/'. $nip .'/show');
+        }
+
+        Alert::success('Data pekerjaan berhasil dihapus', 'Sukses');
+        return redirect('pegawai/detail/pekerjaan/'. $nip .'/show');
     }
 }

@@ -26,7 +26,7 @@ class IbuController extends Controller
      */
     public function create($id)
     {
-        return view('ibu.create', ['id' => $id]);   
+        return view('ibu.create', ['id' => $id , 'title' => 'Tambah data ibu']);   
     }
 
     /**
@@ -100,7 +100,7 @@ class IbuController extends Controller
         }
 
         $data = $ibu->where('nip_pegawai', $id)->get();
-        return view('ibu.edit', ['data' => $data]);
+        return view('ibu.edit', ['data' => $data , 'title' => 'Edit data ibu']);
     }
 
     /**

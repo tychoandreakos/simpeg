@@ -20,7 +20,7 @@ class PegawaiController extends Controller
     public function index()
     {
         $pegawai = DB::table('pegawai')->orderByRaw('created_at','DESC')->get();
-        return view('pegawai.index', ['pegawai' => $pegawai]);
+        return view('pegawai.index', ['pegawai' => $pegawai, 'title' => 'pegawai']);
     }
 
     /**
@@ -30,7 +30,7 @@ class PegawaiController extends Controller
      */
     public function create()
     {
-        return view('pegawai.create');
+        return view('pegawai.create', ['title' => 'Tambah data pegawai']);
     }
 
     /**
@@ -97,17 +97,19 @@ class PegawaiController extends Controller
         $anak = App\Pegawai::find($nip)->anak()->where('pegawai_nip_pegawai', $nip)->orderBy('status_anak', 'asc')
         ->get();
 
+        $pekerjaan = App\Pegawai::find($nip)->pekerjaan()->where('pegawai_nip_pegawai', $nip)->orderBy('periode_perusahaan', 'asc')
+        ->get();
+
         $pegawai = DB::table('pegawai')
         //    ->select('pegawai.nip_pegawai as nippegawai')
            ->leftJoin('pasangan','pegawai.nip_pegawai', '=', 'pasangan.nip_pegawai')
-           ->leftJoin('riwayat_pekerjaan','pegawai.nip_pegawai', '=', 'riwayat_pekerjaan.nip_pegawai')
            ->leftJoin('ayah','pegawai.nip_pegawai', '=', 'ayah.nip_pegawai')
            ->leftJoin('ibu','pegawai.nip_pegawai', '=', 'ibu.nip_pegawai')
            ->where('pegawai.nip_pegawai', '=', $nip)
            ->get();
 
 
-            return view('pegawai.detail', ['pegawai' => $this->middle($pegawai, $nip), 'anak' => $anak]);
+            return view('pegawai.detail', ['pegawai' => $this->middle($pegawai, $nip), 'anak' => $anak , 'pekerjaan' => $pekerjaan, 'title' => 'Detail data pegawai']);
         }
     
         public function middle($pegawai, $nip)
@@ -134,21 +136,6 @@ class PegawaiController extends Controller
                     'lahir_pasangan' => $pegawai->tmp_lahir_pasangan .", ". $pegawai->tgl_lahir_pasangan,
                     'pendidikan_pasangan' => $pegawai->pendidikan_pasangan,
                     'status_pasangan' => $this->status_pasangan($pegawai->pendidikan_pasangan),
-        
-                    // // anak
-                    // 'id_anak' => $pegawai->id_anak,
-                    // 'nama_anak' => $pegawai->nama_anak,
-                    // 'lahir_anak' => $pegawai->tmp_lahir_anak .", ". $pegawai->tgl_lahir_anak,
-                    // 'pendidikan_anak' => $pegawai->pendidikan_anak,
-                    // 'jk_anak' => $this->jk($pegawai->jk_anak),
-                    // 'status_anak' => $this->status_anak($pegawai->status_anak),
-        
-                    // pekerjaan
-                    'id_pekerjaan' => $pegawai->id_pekerjaan,
-                    'nama_perusahaan' => $pegawai->nama_perusahaan,
-                    'lokasi_perusahaan' => $pegawai->lokasi_perusahaan,
-                    'jabatan_perusahaan' => $pegawai->jabatan_perusahaan,
-                    'periode_perusahaan' => $pegawai->periode_perusahaan,
         
                     // ayah
                     'id_ayah' => $pegawai->id_ayah,
@@ -187,7 +174,7 @@ class PegawaiController extends Controller
         }
 
         $data = $pegawai->where('nip_pegawai', $id)->get();
-        return view('pegawai.edit', ['data' => $data]);
+        return view('pegawai.edit', ['data' => $data, 'title' => 'Edit data pegawai']);
     }
 
     /**
@@ -273,17 +260,21 @@ class PegawaiController extends Controller
 
     public function print($nip)
     {
+        $anak = App\Pegawai::find($nip)->anak()->where('pegawai_nip_pegawai', $nip)->orderBy('status_anak', 'asc')
+        ->get();
+
+        $pekerjaan = App\Pegawai::find($nip)->pekerjaan()->where('pegawai_nip_pegawai', $nip)->orderBy('periode_perusahaan', 'asc')
+        ->get();
+
         $pegawai = DB::table('pegawai')
         //    ->select('pegawai.nip_pegawai as nippegawai')
            ->leftJoin('pasangan','pegawai.nip_pegawai', '=', 'pasangan.nip_pegawai')
-           ->leftJoin('anak','pegawai.nip_pegawai', '=', 'anak.nip_pegawai')
-           ->leftJoin('riwayat_pekerjaan','pegawai.nip_pegawai', '=', 'riwayat_pekerjaan.nip_pegawai')
            ->leftJoin('ayah','pegawai.nip_pegawai', '=', 'ayah.nip_pegawai')
            ->leftJoin('ibu','pegawai.nip_pegawai', '=', 'ibu.nip_pegawai')
            ->where('pegawai.nip_pegawai', '=', $nip)
            ->get();
         
-           $pdf = PDF::loadview('print.cetakPegawai', ['pegawai' => $this->middle($pegawai, $nip)]);
+           $pdf = PDF::loadview('print.cetakPegawai', ['pegawai' => $this->middle($pegawai, $nip), 'pekerjaan' => $pekerjaan, 'anak' => $anak]);
            return $pdf->stream();
     }
 

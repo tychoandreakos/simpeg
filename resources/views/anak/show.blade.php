@@ -34,7 +34,7 @@
                         <td style="width: 10%">{{ PegawaiController::status_anak($p->status_anak) }}</td>
                         <td style="width: 14%">
                             <a href="{{ $url = route('anak.edit', ['nip' => $p->id_anak]) }}" class="btn btn-success btn-sm">Edit</a>
-                            <a href="{{ $url = route('anak.destroy', ['nip' => $p->id_anak]) }}" class="btn btn-danger btn-sm">Hapus</a>
+                            <a href="{{ $url = route('anak.destroys', ['id' => $p->id_anak, 'nip' => $p->pegawai_nip_pegawai]) }}" class="btn btn-danger btn-sm">Hapus</a>
                         </td>
                     </tr>
                     <?php $i++ ?>

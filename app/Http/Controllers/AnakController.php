@@ -26,7 +26,7 @@ class AnakController extends Controller
      */
     public function create($id)
     {
-        return view('anak.create', ['id' => $id]);    
+        return view('anak.create', ['id' => $id, 'title' => 'Tambah data anak']);    
     }
 
     /**
@@ -97,7 +97,7 @@ class AnakController extends Controller
     public function show($id)
     {
         $anak = DB::table('anak')->where('pegawai_nip_pegawai', $id)->get();
-        return view('anak.show', ['anak' => $anak, 'id' => $id]);
+        return view('anak.show', ['anak' => $anak, 'id' => $id, 'title' => 'Data anak']);
     }
 
     /**
@@ -117,7 +117,7 @@ class AnakController extends Controller
         }
 
         $data = $anak->where('id_anak', $id)->get();
-        return view('anak.edit', ['data' => $data]);
+        return view('anak.edit', ['data' => $data, 'title' => 'Edit data anak']);
     }
 
     /**
@@ -131,7 +131,6 @@ class AnakController extends Controller
     {
         $now = \Carbon\Carbon::now();
         $anak = DB::table('anak');
-        $pegawaiFunction = new Pegawai;
 
         $validatedData = $request->validate([
             'nama' => 'required|max:50',
@@ -172,8 +171,17 @@ class AnakController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($nip, $id)
     {
-        //
+        $anak = DB::table('anak');
+        $deleted = $anak->where('id_anak', $id)->delete();
+
+        if(!$deleted){
+            Alert::error('Data anak gagal dihapus', 'Error');
+            return redirect('pegawai/detail/anak/'. $nip .'/show');
+        }
+
+        Alert::success('Data anak berhasil dihapus', 'Sukses');
+        return redirect('pegawai/detail/anak/'. $nip .'/show');
     }
 }

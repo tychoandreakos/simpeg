@@ -17,7 +17,7 @@
                 <a href="{{ $url = route('pegawai.printShortly', ['nip' => $pegawai['nip']]) }}"
                     class="btn btn-success btn-sm"><i class="fa fa-print "></i> Cetak data</a>
                 @if (!is_null($pegawai['id_pasangan']) && !$anak->isEmpty() && !is_null($pegawai['id_ayah']) &&
-                !is_null($pegawai['id_ibu']) && !is_null($pegawai['id_pekerjaan']))
+                !is_null($pegawai['id_ibu']) && !$pekerjaan->isEmpty())
                 <a href="{{ $url = route('pegawai.print', ['nip' => $pegawai['nip']]) }}"
                     class="btn btn-primary btn-sm"><i class="fa fa-check"></i> Cetak semua data</a>
                 @endif
@@ -77,12 +77,12 @@
                     </table>
 
                     @if (is_null($pegawai['id_pasangan']) && $anak->isEmpty() && is_null($pegawai['id_ayah']) &&
-                    is_null($pegawai['id_ibu']) && is_null($pegawai['id_pekerjaan']))
+                    is_null($pegawai['id_ibu']) && $pekerjaan->isEmpty())
                     <p class="text-danger">Data yang belum lengkap: </p>
                     @endif
 
                     @if (!is_null($pegawai['id_pasangan']) && !$anak->isEmpty() && !is_null($pegawai['id_ayah']) &&
-                    !is_null($pegawai['id_ibu']) && !is_null($pegawai['id_pekerjaan']))
+                    !is_null($pegawai['id_ibu']) && !$pekerjaan->isEmpty())
                     <p class="text-success"><i class="fa fa-check"></i> Data sudah lengkap. </p>
                     @endif
 
@@ -110,7 +110,7 @@
                         class="btn btn-primary btn-sm">Lengkapi Data Ibu</a>
                     @endif
 
-                    @if (is_null($pegawai['id_pekerjaan']))
+                    @if ($pekerjaan->isEmpty())
                     <a href="{{ $url = route('pekerjaan.add', ['nip' => $pegawai['nip']]) }}"
                         class="btn btn-primary btn-sm">Lengkapi Data Pekerjaan</a>
                     @endif
@@ -356,7 +356,7 @@
 
 
 {{-- Riwayat Pekerjaan --}}
-@if (!is_null($pegawai['id_pekerjaan']))
+@if (!$pekerjaan->isEmpty())
 <div class="container-fluid mt-5">
     <div class="panel panel-info bg-white p-5">
 
@@ -370,23 +370,33 @@
                 <div class=" col-md-9 col-lg-9 ">
                     <table class="table table-user-information">
                         <tbody>
+                            @foreach ($pekerjaan as $p)
                             <tr>
                                 <td>Nama Perusahaan </td>
-                                <td>{{ ucfirst($pegawai['nama_perusahaan']) }}</td>
+                                <td>{{ ucfirst($p->nama_perusahaan) }}</td>
                             </tr>
                             <tr>
                                 <td>Lokasi Perusahaan </td>
-                                <td>{{ ucfirst($pegawai['lokasi_perusahaan']) }}</td>
+                                <td>{{ ucfirst($p->lokasi_perusahaan) }}</td>
                             </tr>
                             <tr>
                                 <td>Jabatan Perusahaan </td>
-                                <td>{{ ucfirst($pegawai['jabatan_perusahaan']) }}</td>
+                                <td>{{ ucfirst($p->jabatan_perusahaan) }}</td>
                             </tr>
                             <tr>
                                 <td>Periode Perusahaan </td>
-                                <td>{{ ucfirst($pegawai['periode_perusahaan']) }}</td>
+                                <td>{{ ucfirst($p->periode_perusahaan) }}</td>
                             </tr>
-
+                            <tr style="border:none">
+                                    <td style="border:none"></td>
+                                    <td style="border:none"></td>
+                                </tr>
+                                <tr style="border:none">
+                                    <td style="border:none"></td>
+                                    <td style="border:none"></td>
+                                </tr>
+                                
+                            @endforeach
                         </tbody>
                     </table>
 
@@ -394,12 +404,17 @@
             </div>
         </div>
         <div class="panel-footer text-white">
-            <span class="pull-right">
-                <a href="{{ $url = route('pekerjaan.edit', ['nip' => $pegawai['nip']]) }}"
-                    data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-primary"><i
-                        class="fa fa-refresh"></i> Edit</a>
-            </span>
-        </div>
+                <span class="pull-right">
+                    <a href="{{ $url = route('pekerjaan.add', ['nip' => $pegawai['nip']]) }}"
+                        data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-success"><i
+                            class="fa fa-refresh"></i> Tambah Data Riwayat Pekerjaan</a>
+                    <a href="{{ $url = route('pekerjaan.show', ['nip' => $pegawai['nip']]) }}"
+                        data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-primary"><i
+                            class="fa fa-refresh"></i> Edit</a>
+    
+                </span>
+            </div>
+    
 
     </div>
 

@@ -11,15 +11,15 @@
 
     <div class="panel panel-info bg-white p-5">
         <div class="panel-heading">
-            <h3 class="panel-title">Edit Riwayat Pekerjaan</h3>
+            <h3 class="panel-title">Edit Data Pekerjaan</h3>
         </div>
         <div class="panel-body">
-			@foreach ($data as $pekerjaan)
+            @foreach ($data as $pekerjaan)
 
-            <form action="{{ $url = route('pekerjaan.update', ['nip' => $pekerjaan->nip_pegawai]) }}" method="post" class="needs-validation" novalidate>
-                @method('patch')
+            <form action="{{ $url = route('pekerjaan.update', ['nip' => $pekerjaan->id_pekerjaan]) }}" method="post" class="needs-validation" novalidate>
+                    @method('patch')
                 {{ csrf_field() }}
-        <input type="hidden" name="id_pekerjaan" value="{{ $pekerjaan->id_pekerjaan }}">
+                <input type="hidden" name="nip" value="{{ $pekerjaan->pegawai_nip_pegawai }}">
                 <div class="form-group">
                     <label for="nama">Nama Perusahaan</label>
                     <input type="text" class="form-control @error('nama') is-invalid @enderror" id="nama" name="nama"

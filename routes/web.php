@@ -34,14 +34,17 @@ Route::get('pegawai/detail/pasangan/{pasangan}', 'PasanganController@create')->n
 Route::resource('pegawai/detail/anak', 'AnakController')->parameters([
     'pegawai/detail/anak' => 'nip',
 ]);
-Route::get('pegawai/detail/anak/{anak}', 'AnakController@create')->name('anak.add');
+Route::get('pegawai/detail/anak/{anak}/create', 'AnakController@create')->name('anak.add');
 Route::get('pegawai/detail/anak/{anak}/show', 'AnakController@show')->name('anak.show');
+Route::get('pegawai/detail/anak/{nip}/{anak}/hapus', 'AnakController@destroy')->name('anak.destroys');
 
 // riwayat pekerjaan
 Route::resource('pegawai/detail/pekerjaan', 'PekerjaanController')->parameters([
     'pegawai/detail/pekerjaan' => 'nip'
 ]);
 Route::get('pegawai/detail/pekerjaan/{pekerjaan}', 'PekerjaanController@create')->name('pekerjaan.add');
+Route::get('pegawai/detail/pekerjaan/{pekerjaan}/show', 'PekerjaanController@show')->name('pekerjaan.show');
+Route::get('pegawai/detail/pekerjaan/{nip}/{pekerjaan}/hapus', 'PekerjaanController@destroy')->name('pekerjaan.destroys');
 
 // ayah
 Route::resource('pegawai/detail/ayah', 'AyahController')->parameters([

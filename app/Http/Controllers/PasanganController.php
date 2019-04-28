@@ -25,7 +25,7 @@ class PasanganController extends Controller
      */
     public function create($id)
     {
-        return view('pasangan.create', ['id' => $id]);   
+        return view('pasangan.create', ['id' => $id , 'title' => 'Tambah data pasangan']);   
     }
 
     /**
@@ -101,7 +101,7 @@ class PasanganController extends Controller
         }
 
         $data = $pasangan->where('nip_pegawai', $id)->get();
-        return view('pasangan.edit', ['data' => $data]);
+        return view('pasangan.edit', ['data' => $data , 'title' => 'Edit data pasangan']);
     }
 
     /**

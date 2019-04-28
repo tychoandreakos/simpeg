@@ -11,7 +11,9 @@
     <link rel="stylesheet" href="{{ asset('css/sweetalert.css') }}">
     <link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
-    <title>Selamat Datang</title>
+  <title>Simpeg NRMETAL @isset($title)
+    {{'- '. $title}}
+    @endisset</title>
   </head>
   <body>
 

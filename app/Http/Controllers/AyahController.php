@@ -20,7 +20,7 @@ class AyahController extends Controller
      */
     public function create($id)
     {
-        return view('ayah.create', ['id' => $id]);   
+        return view('ayah.create', ['id' => $id , 'title' => 'Tambah data ayah']);   
     }
 
     /**
@@ -94,7 +94,7 @@ class AyahController extends Controller
         }
 
         $data = $ayah->where('nip_pegawai', $id)->get();
-        return view('ayah.edit', ['data' => $data]);
+        return view('ayah.edit', ['data' => $data , 'title' => 'Edit data ayah']);
     }
 
     /**
