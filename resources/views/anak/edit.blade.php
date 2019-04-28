@@ -5,7 +5,7 @@
 
 <div class="container-fluid mt-5">
     <div class="button-back">
-        <a href="{{ $url = route('home') }}" class="back"><i class="fa fa-arrow-left"></i> Kembali</a>
+        <a href="{{ $url = route('pegawai.index') }}" class="back"><i class="fa fa-arrow-left"></i> Kembali</a>
         <hr>
     </div>
 
@@ -16,10 +16,10 @@
         <div class="panel-body">
             @foreach ($data as $anak)
 
-            <form action="{{ $url = route('anak.update', ['nip' => $anak->nip_pegawai]) }}" method="post" class="needs-validation" novalidate>
+            <form action="{{ $url = route('anak.update', ['nip' => $anak->id_anak]) }}" method="post" class="needs-validation" novalidate>
                     @method('patch')
                 {{ csrf_field() }}
-                <input type="hidden" name="id_anak" value="{{ $anak->id_anak }}">
+                <input type="hidden" name="nip" value="{{ $anak->pegawai_nip_pegawai }}">
                 <div class="form-group">
                     <label for="nama">Nama</label>
                     <input type="text" class="form-control @error('nama') is-invalid @enderror" id="nama" name="nama"

@@ -37,7 +37,7 @@ class AyahController extends Controller
 
         $validatedData = $request->validate([
             'nama' => 'required|max:50',
-            'tgl' => 'required',
+            'tgl' => 'required|date',
             'tmp' => 'required',
             'pendidikan' => 'required',
         ]);
@@ -60,10 +60,10 @@ class AyahController extends Controller
 
         if(!$saved){
             Alert::error('Data ayah gagal disimpan', 'Error');
-            return view('ayah.create');
+            return redirect('pegawai/'. $request->nip .'/detail');
         }
         Alert::success('Data ayah berhasil disimpan', 'Sukses');
-        return redirect('pegawai/detail/'. $request->nip);
+        return redirect('pegawai/'. $request->nip .'/detail');
     }
 
     /**
@@ -111,7 +111,7 @@ class AyahController extends Controller
 
         $validatedData = $request->validate([
             'nama' => 'required|max:50',
-            'tgl' => 'required',
+            'tgl' => 'required|date',
             'tmp' => 'required',
             'pendidikan' => 'required',
         ]);
@@ -132,10 +132,10 @@ class AyahController extends Controller
 
         if(!$update){
             Alert::error('Data ayah gagal diubah', 'Error');
-            return redirect('pegawai/detail/'. $id);
+            return redirect('pegawai/'. $id .'/detail');
         }
         Alert::success('Data ayah dengan berhasil diubah', 'Sukses');
-        return redirect('pegawai/detail/'. $id);
+        return redirect('pegawai/'. $id .'/detail');
     }
 
     /**

@@ -5,7 +5,7 @@
 
 <div class="container-fluid mt-5">
     <div class="button-back">
-        <a href="{{ $url = route('home') }}" class="back"><i class="fa fa-arrow-left"></i> Kembali</a>
+        <a href="{{ $url = route('pegawai.index') }}" class="back"><i class="fa fa-arrow-left"></i> Kembali</a>
         <hr>
     </div>
 
@@ -64,8 +64,8 @@
         <div class="form-group">
             <label for="status">Status</label>
             <select class="form-control @error('status') is-invalid @enderror" name="status" id="status">
-                <option value="0">Suami</option>
-                <option value="1">Istri</option>
+                <option value="0">Istri</option>
+                <option value="1">Suami</option>
             </select>
             @error('status')
                             <div class="invalid-feedback">

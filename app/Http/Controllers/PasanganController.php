@@ -42,7 +42,7 @@ class PasanganController extends Controller
 
         $validatedData = $request->validate([
             'nama' => 'required|max:50',
-            'tgl' => 'required',
+            'tgl' => 'required|date',
             'tmp' => 'required',
             'pendidikan' => 'required',
             'status' => 'required',
@@ -67,10 +67,10 @@ class PasanganController extends Controller
 
         if(!$saved){
             Alert::error('Data pasangan gagal disimpan', 'Error');
-            return view('pasangan.create');
+            return redirect('pegawai/'. $request->nip .'/detail');
         }
         Alert::success('Data pasangan berhasil disimpan', 'Sukses');
-        return redirect('pegawai/detail/'. $request->nip);
+        return redirect('pegawai/'. $request->nip .'/detail');
     }
 
     /**
@@ -118,7 +118,7 @@ class PasanganController extends Controller
 
         $validatedData = $request->validate([
             'nama' => 'required|max:50',
-            'tgl' => 'required',
+            'tgl' => 'required|date',
             'tmp' => 'required',
             'pendidikan' => 'required',
             'status' => 'required',
@@ -141,10 +141,10 @@ class PasanganController extends Controller
 
         if(!$update){
             Alert::error('Data pasangan gagal diubah', 'Error');
-            return view('pasangan.create');
+            return redirect('pegawai/'. $id .'/detail');
         }
         Alert::success('Data pasangan dengan berhasil diubah', 'Sukses');
-        return redirect('pegawai/detail/'. $id);
+        return redirect('pegawai/'. $id .'/detail');
     }
 
     /**

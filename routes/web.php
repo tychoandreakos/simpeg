@@ -16,14 +16,13 @@ Route::get('/', function () {
 });
 
 // pegawai
-Route::get('pegawai', 'PegawaiController@index')->name('home');
-Route::get('pegawai/tambah', 'PegawaiController@create')->name('tambah_pegawai');
-Route::post('pegawai/store', 'PegawaiController@store');
-Route::get('pegawai/edit/{nip}', 'PegawaiController@edit')->name('edit_pegawai');
-Route::get('pegawai/hapus/{nip}', 'PegawaiController@destroy')->name('hapus_pegawai');
-Route::post('pegawai/update', 'PegawaiController@update');
-Route::get('pegawai/detail/{nip}', 'PegawaiController@detail');
-// Route::resource('pegawai', 'PegawaiController');~
+Route::resource('pegawai', 'PegawaiController')->parameters([
+    'pegawai' => 'nip',
+]);
+Route::get('pegawai/{nip}/detail', 'PegawaiController@show')->name('pegawai.detail');
+Route::get('pegawai/{nip}/hapus', 'PegawaiController@destroy')->name('pegawai.destroys');
+Route::get('pegawai/{nip}/cetak-semua', 'PegawaiController@print')->name('pegawai.print');
+Route::get('pegawai/{nip}/cetak', 'PegawaiController@printShortly')->name('pegawai.printShortly');
 
 //pasangan
 Route::resource('pegawai/detail/pasangan', 'PasanganController')->parameters([
@@ -36,6 +35,7 @@ Route::resource('pegawai/detail/anak', 'AnakController')->parameters([
     'pegawai/detail/anak' => 'nip',
 ]);
 Route::get('pegawai/detail/anak/{anak}', 'AnakController@create')->name('anak.add');
+Route::get('pegawai/detail/anak/{anak}/show', 'AnakController@show')->name('anak.show');
 
 // riwayat pekerjaan
 Route::resource('pegawai/detail/pekerjaan', 'PekerjaanController')->parameters([
@@ -55,7 +55,3 @@ Route::resource('pegawai/detail/ibu', 'IbuController')->parameters([
 ]);
 Route::get('pegawai/detail/ibu/{ibu}', 'IbuController@create')->name('ibu.add');
 
-
-// Route::get('test', 'PegawaiController@index');
-// Route::post('test/create', 'AnakController@bikin');
-// // Route::get('test/home', 'PegawaiController@index');

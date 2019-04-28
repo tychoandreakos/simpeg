@@ -19,7 +19,7 @@
     </div>
 
 <div class="container-fluid">
-        <a class="btn btn-success mx-auto" style="margin-right:20px;" href="{{ $url = route('tambah_pegawai')}}">Tambah Data Pegawai</a>
+        <a class="btn btn-success mx-auto" style="margin-right:20px;" href="{{ $url = route('pegawai.create')}}">Tambah Data Pegawai</a>
         <hr>
         <table id="example" class="table table-striped table-light table-bordered" cellspacing="0" width="100%">
                 <thead>
@@ -42,9 +42,9 @@
                         <td style="width: 25%">{{ $p->alamat }}</td>
                         <td style="width: 15%">{{ $p->no_telp }}</td>
                         <td style="width: 17%">
-                            <a href="pegawai/detail/{{ $p->nip_pegawai }}" class="btn btn-primary btn-sm">Detail</a>
-                            <a href="pegawai/edit/{{ $p->nip_pegawai }}" class="btn btn-success btn-sm">Edit</a>
-                            <a href="pegawai/hapus/{{ $p->nip_pegawai }}" class="btn btn-danger btn-sm">Hapus</a>
+                        <a href="{{ $url = route('pegawai.detail', ['nip' => $p->nip_pegawai]) }}" class="btn btn-primary btn-sm">Detail</a>
+                            <a href="{{ $url = route('pegawai.edit', ['nip' => $p->nip_pegawai]) }}" class="btn btn-success btn-sm">Edit</a>
+                            <a href="{{ $url = route('pegawai.destroys', ['nip' => $p->nip_pegawai]) }}" class="btn btn-danger btn-sm">Hapus</a>
                         </td>
                     </tr>
                     <?php $i++ ?>

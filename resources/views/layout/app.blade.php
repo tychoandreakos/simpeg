@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/sweetalert.css') }}">
     <link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap4.min.css') }}">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
     <title>Selamat Datang</title>
   </head>
   <body>
@@ -38,7 +38,7 @@
                     </ul>
                     <ul class="navbar-nav ml-md-auto d-md-flex">
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ $url = route('home')  }}">Home <i class="fa fa-home"></i></a>
+                            <a class="nav-link" href="{{ $url = route('pegawai.index')  }}">Home <i class="fa fa-home"></i></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Logout <i class="fa fa-arrow-right"></i></a>

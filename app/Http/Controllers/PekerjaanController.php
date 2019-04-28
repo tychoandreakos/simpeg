@@ -65,10 +65,10 @@ class PekerjaanController extends Controller
 
         if(!$saved){
             Alert::error('Data pekerjaan gagal disimpan', 'Error');
-            return view('pekerjaan.create');
+            return redirect('pegawai/'. $request->nip .'/detail');
         }
         Alert::success('Data pekerjaan berhasil disimpan', 'Sukses');
-        return redirect('pegawai/detail/'. $request->nip);
+        return redirect('pegawai/'. $request->nip .'/detail');
     }
 
     /**
@@ -137,10 +137,10 @@ class PekerjaanController extends Controller
 
         if(!$update){
             Alert::error('Data pekerjaan gagal diubah', 'Error');
-            return view('pekerjaan.create');
+            return redirect('pegawai/'. $id .'/detail');
         }
         Alert::success('Data pekerjaan dengan berhasil diubah', 'Sukses');
-        return redirect('pegawai/detail/'. $id);
+        return redirect('pegawai/'. $id .'/detail');
     }
 
     /**

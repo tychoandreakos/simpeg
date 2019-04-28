@@ -43,7 +43,7 @@ class IbuController extends Controller
 
         $validatedData = $request->validate([
             'nama' => 'required|max:50',
-            'tgl' => 'required',
+            'tgl' => 'required|date',
             'tmp' => 'required',
             'pendidikan' => 'required',
         ]);
@@ -66,10 +66,10 @@ class IbuController extends Controller
 
         if(!$saved){
             Alert::error('Data ibu gagal disimpan', 'Error');
-            return view('ibu.create');
+            return redirect('pegawai/'. $request->nip .'/detail');
         }
         Alert::success('Data ibu berhasil disimpan', 'Sukses');
-        return redirect('pegawai/detail/'. $request->nip);
+        return redirect('pegawai/'. $request->nip .'/detail');
     }
 
     /**
@@ -117,7 +117,7 @@ class IbuController extends Controller
 
         $validatedData = $request->validate([
             'nama' => 'required|max:50',
-            'tgl' => 'required',
+            'tgl' => 'required|date',
             'tmp' => 'required',
             'pendidikan' => 'required',
         ]);
@@ -138,10 +138,10 @@ class IbuController extends Controller
 
         if(!$update){
             Alert::error('Data ibu gagal diubah', 'Error');
-            return view('ibu.create');
+            return redirect('pegawai/'. $id .'/detail');
         }
         Alert::success('Data ibu dengan berhasil diubah', 'Sukses');
-        return redirect('pegawai/detail/'. $id);
+        return redirect('pegawai/'. $id .'/detail');
     }
 
     /**

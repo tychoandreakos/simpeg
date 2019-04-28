@@ -5,7 +5,7 @@
 
 <div class="container-fluid mt-5">
     <div class="button-back">
-        <a href="{{ $url = route('home') }}" class="back"><i class="fa fa-arrow-left"></i> Kembali</a>
+        <a href="{{ $url = route('pegawai.index') }}" class="back"><i class="fa fa-arrow-left"></i> Kembali</a>
         <hr>
     </div>
 
