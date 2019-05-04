@@ -44,7 +44,7 @@
                         <td style="width: 17%">
                         <a href="{{ $url = route('pegawai.detail', ['nip' => $p->nip_pegawai]) }}" class="btn btn-primary btn-sm">Detail</a>
                             <a href="{{ $url = route('pegawai.edit', ['nip' => $p->nip_pegawai]) }}" class="btn btn-success btn-sm">Edit</a>
-                            <a href="{{ $url = route('pegawai.destroys', ['nip' => $p->nip_pegawai]) }}" class="btn btn-danger btn-sm">Hapus</a>
+                            <a href="{{ $url = route('pegawai.destroys', ['nip' => $p->nip_pegawai]) }}" onclick="javascript: return confirm('Anda yakin hapus ?')" class="btn btn-danger btn-sm">Hapus</a>
                         </td>
                     </tr>
                     <?php $i++ ?>
