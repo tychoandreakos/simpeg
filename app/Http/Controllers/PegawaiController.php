@@ -125,10 +125,11 @@ class PegawaiController extends Controller
                     'lahir' => $pegawai->tmp_lahir .", ". $pegawai->tgl_lahir,
                     'jk' => $this->jk($pegawai->jk),
                     'no_telp' => $pegawai->no_telp,
-                    'status' => $this->status($pegawai->status),
+                    'status' => $this->status_menikah($pegawai->status),
                     'email' => $this->email($pegawai->email),
                     'gol_darah' => $this->goldar($pegawai->gol_darah),
                     'agama' => $this->agama($pegawai->agama),
+                    'status_kode' => $pegawai->status,
         
                     //pasangan
                     'id_pasangan' => $pegawai->id_pasangan,
@@ -225,11 +226,11 @@ class PegawaiController extends Controller
 
         if(!$updated){
             Alert::error('Data pegawai gagal diupdate', 'Error');
-            return redirect('pegawai');
+            return redirect('pegawai/'.$request->nip.'/detail');
         }
 
         Alert::success('Data pegawai berhasil diupdate', 'Sukses');
-        return redirect('pegawai');
+        return redirect('pegawai/'.$request->nip.'/detail');
     }
 
     /**
@@ -294,7 +295,7 @@ class PegawaiController extends Controller
            return $pdf->stream();
     }
 
-    public function status($stat)
+    public function status_menikah($stat)
     {
         if($stat == 0){
             return 'Menikah';

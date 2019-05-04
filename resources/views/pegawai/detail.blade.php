@@ -13,7 +13,7 @@
 
         <div class="panel-heading">
             <h3 class="panel-title">Detail pegawai</h3>
-            <div class="print">
+            <div class="print mb-2">
                 <a href="{{ $url = route('pegawai.printShortly', ['nip' => $pegawai['nip']]) }}"
                     class="btn btn-success btn-sm"><i class="fa fa-print "></i> Cetak data</a>
                 @if (!is_null($pegawai['id_pasangan']) && !$anak->isEmpty() && !is_null($pegawai['id_ayah']) &&
@@ -88,15 +88,18 @@
 
 
                     {{-- button lengkapi data --}}
+                    @if ($pegawai['status_kode'] == 0)
                     @if (is_null($pegawai['id_pasangan']))
                     <a href="{{ $url = route('pasangan.add', ['nip' => $pegawai['nip']]) }}"
                         class="btn btn-primary btn-sm">Lengkapi Data Pasangan</a>
                     @endif
+                    @endif
 
-
+                    @if ($pegawai['status_kode'] == 0)
                     @if ($anak->isEmpty())
                     <a href="{{ $url = route('anak.add', ['nip' => $pegawai['nip']]) }}"
                         class="btn btn-primary btn-sm">Lengkapi Data Anak</a>
+                    @endif
                     @endif
 
 
@@ -134,6 +137,7 @@
 </div>
 
 {{-- pasangan --}}
+@if ($pegawai['status_kode'] == 0)
 @if (!is_null($pegawai['id_pasangan']))
 <div class="container-fluid mt-5">
     <div class="panel panel-info bg-white p-5">
@@ -184,10 +188,12 @@
 
 </div>
 @endif
+@endif
 
 
 
 {{-- Anak --}}
+@if ($pegawai['status_kode'] == 0)
 @if (!$anak->isEmpty())
 <div class="container-fluid mt-5">
     <div class="panel panel-info bg-white p-5">
@@ -256,6 +262,7 @@
     </div>
 
 </div>
+@endif
 @endif
 
 

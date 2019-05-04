@@ -63,8 +63,8 @@
                 <div class="form-group">
                     <label for="jk">Jenis Kelamin</label>
                     <select class="form-control @error('jk') is-invalid @enderror" name="jk" id="jk">
-                        <option value="0">Suami</option>
-                        <option value="1">Istri</option>
+                        <option value="0">Laki - laki</option>
+                        <option value="1">Perempuan</option>
                     </select>
                     @error('jk')
                     <div class="invalid-feedback">
@@ -85,8 +85,8 @@
                 <div class="form-group">
                     <label for="status">Status</label>
                     <select class="form-control @error('status') is-invalid @enderror" name="status" id="status">
-                        <option value="0">Suami</option>
-                        <option value="1">Istri</option>
+                        <option value="0">Menikah</option>
+                        <option value="1">Belum Menikah</option>
                     </select>
                     @error('status')
                     <div class="invalid-feedback">

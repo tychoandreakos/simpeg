@@ -15,7 +15,7 @@ class PegawaiSeeder extends Seeder
     {
         $faker = Faker::create('id_ID');
 
-        for($i=0; $i < 5; $i++){
+        for($i=0; $i < 100; $i++){
             DB::table('pegawai')->insert([
                 'nip_pegawai' => $faker->nik(),
                 'nama' => $faker->name,

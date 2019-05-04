@@ -58,3 +58,7 @@ Route::resource('pegawai/detail/ibu', 'IbuController')->parameters([
 ]);
 Route::get('pegawai/detail/ibu/{ibu}', 'IbuController@create')->name('ibu.add');
 
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
