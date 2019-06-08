@@ -12,6 +12,12 @@ use App;
 
 class PegawaiController extends Controller
 {
+
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -284,8 +290,8 @@ class PegawaiController extends Controller
         $pegawai = DB::table('pegawai')
         //    ->select('pegawai.nip_pegawai as nippegawai')
            ->leftJoin('pasangan','pegawai.nip_pegawai', '=', 'pasangan.nip_pegawai')
-           ->leftJoin('anak','pegawai.nip_pegawai', '=', 'anak.nip_pegawai')
-           ->leftJoin('riwayat_pekerjaan','pegawai.nip_pegawai', '=', 'riwayat_pekerjaan.nip_pegawai')
+           ->leftJoin('anak','pegawai.nip_pegawai', '=', 'anak.pegawai_nip_pegawai')
+           ->leftJoin('pekerjaan','pegawai.nip_pegawai', '=', 'pekerjaan.pegawai_nip_pegawai')
            ->leftJoin('ayah','pegawai.nip_pegawai', '=', 'ayah.nip_pegawai')
            ->leftJoin('ibu','pegawai.nip_pegawai', '=', 'ibu.nip_pegawai')
            ->where('pegawai.nip_pegawai', '=', $nip)
